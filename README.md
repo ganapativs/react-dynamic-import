@@ -54,12 +54,14 @@ yarn add react-dynamic-import
 - **Use dynamic module**
     ```js
     // Make sure to use it outside render method, else new component is rendered in each render
+    // You can choose to show a placeholder and render error component in case of error, check API section for more
     const RealComponent = ReactDynamicImport({ name: 'realModuleName', loader }),
     ```
 - **Render component**
     ```js
     class Container extends React.component {
         render() {
+            // This component will be dynamically fetched and rendered on first usage
             return <RealComponent />
         }
     }
