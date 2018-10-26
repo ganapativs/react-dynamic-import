@@ -1,0 +1,74 @@
+{
+  "name": "react-dynamic-import",
+  "version": "0.1.0",
+  "description": "Dynamically load and render any react module(Component or an HOC) using dynamic import 🎉",
+  "main": "dist/react-dynamic-import.js",
+  "module": "dist/react-dynamic-import.es.js",
+  "browser": "dist/react-dynamic-import.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ganapativs/react-dynamic-import.git"
+  },
+  "author": "Ganapati V S <vsg.inbox@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ganapativs/react-dynamic-import/issues"
+  },
+  "homepage": "https://github.com/ganapativs/react-dynamic-import",
+  "keywords": [
+    "react component",
+    "react HOC",
+    "dynamic-import",
+    "webpack"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist && mkdir -p dist",
+    "build": "NODE_ENV=production rollup -c",
+    "lint": "eslint ./src --ext .js",
+    "jsdoc": "mkdir -p docs && jsdoc2md src/index.js > docs/react-dynamic-import.md",
+    "prepublishOnly": "yarn run jsdoc",
+    "size": "size-limit"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn build && yarn run jsdoc && git add dist docs"
+    }
+  },
+  "size-limit": [
+    {
+      "limit": "1.5 KB",
+      "path": "dist/react-dynamic-import.js"
+    }
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^1.1.2",
+    "jsdoc-to-markdown": "^4.0.1",
+    "prettier": "^1.14.3",
+    "rollup": "^0.66.6",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-uglify": "^6.0.0",
+    "size-limit": "^0.20.1"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0 || ^16.0.0"
+  },
+  "dependencies": {
+    "react": "^16.5.2"
+  }
+}
