@@ -45,7 +45,7 @@ yarn add react-dynamic-import
 
 1) Component
 
-    - **Folder structure**-
+    - **Folder structure**
         ```text
         |_ realComponent.js
         |_ container.js <-- working file
@@ -81,7 +81,7 @@ yarn add react-dynamic-import
 
 1) HOC
 
-    - **Folder structure**-
+    - **Folder structure**
         ```text
         |_ realComponent.js <-- Real component to wrap in HOC
         |_ withHOC.js <-- HOC
@@ -120,7 +120,7 @@ yarn add react-dynamic-import
 
 1) Component
 
-    - **Folder structure**-
+    - **Folder structure**
         ```text
         |_ dynamic
         |  |_ realComponent-en.js
@@ -166,7 +166,7 @@ yarn add react-dynamic-import
 
 1) HOC
 
-    - **Folder structure**-
+    - **Folder structure**
         ```text
         |_ dynamic <-- Dynamic HOC's
         |  |_ withHOC-en.js
