@@ -10,7 +10,7 @@ Tiny(**around 1.4kb gzipped**) dynamic module loader and renderer.
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ganapativs/react-dynamic-import/)
 [![Build Status](https://travis-ci.com/ganapativs/react-dynamic-import.svg?branch=master)](https://travis-ci.com/ganapativs/react-dynamic-import)
 [![npm version](https://badge.fury.io/js/react-dynamic-import.svg)](https://badge.fury.io/js/react-dynamic-import)
-[![GitHub version](https://badge.fury.io/gh/ganapativs%2Freact-dynamic-import.svg)](https://badge.fury.io/gh/ganapativs%2Freact-dynamic-import)
+[![GitHub version](https://badge.fury.io/gh/ganapativs%2Freact-dynamic-import.svg)](https://badge.fury.io/gh/ganapativs%2Freact-dynamic-import) [![Greenkeeper badge](https://badges.greenkeeper.io/ganapativs/react-dynamic-import.svg)](https://greenkeeper.io/)
 
 ## Table of Contents
 
