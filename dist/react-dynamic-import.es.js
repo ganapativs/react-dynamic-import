@@ -177,6 +177,10 @@ var defaultErrorHandler = function defaultErrorHandler(_ref) {
       message = _ref.error.message;
   return "Failed to fetch dynamic module: ".concat(name, ".\nError: ").concat(message, ".");
 };
+
+var defaultPlaceholder = function defaultPlaceholder() {
+  return null;
+};
 /**
  * Dynamically load any react module(Component or an HOC)
  *
@@ -191,9 +195,9 @@ var defaultErrorHandler = function defaultErrorHandler(_ref) {
  * @param {Boolean} [options.isHOC=false] - Is the module a HOC?
  * @param {String} [options.name] - Dynamic module to be fetched(Mostly it will be part of the module file name),
  *                                        optional if loader returns same component every time
- * @param {Component} [options.placeholder=null] - React component to be rendered until actual module is fetched
- *                                                 (You can add UX improvements like adding small delay before showing
- *                                                 loader inside your class/functional component)
+ * @param {Component} [options.placeholder=defaultPlaceholder] - React component to be rendered until actual module is fetched
+ *                                                               (You can add UX improvements like adding small delay before showing
+ *                                                               loader inside your class/functional component)
  * @param {Component} [options.errorHandler=defaultErrorHandler] - React component to be rendered if fetching actual module fails.
  *                                                                 This will receive `name` and `error` object as `props`
  */
@@ -205,7 +209,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       isHOC = _ref2$isHOC === void 0 ? false : _ref2$isHOC,
       name = _ref2.name,
       _ref2$placeholder = _ref2.placeholder,
-      placeholder = _ref2$placeholder === void 0 ? null : _ref2$placeholder,
+      DefaultPlaceholder = _ref2$placeholder === void 0 ? defaultPlaceholder : _ref2$placeholder,
       _ref2$errorHandler = _ref2.errorHandler,
       ErrorHandler = _ref2$errorHandler === void 0 ? defaultErrorHandler : _ref2$errorHandler;
 
@@ -291,14 +295,16 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
           });
         }
 
-        return DynamicComponent ? React.createElement(DynamicComponent, props) : placeholder;
+        return DynamicComponent ? React.createElement(DynamicComponent, props) : React.createElement(DefaultPlaceholder, {
+          name: name
+        });
       }
     }]);
 
     return DynamicImport;
   }(Component);
 
-  _defineProperty(DynamicImport, "displayName", "DynamicImport".concat(isHOC ? ":HOC" : "", "(").concat(name, ")"));
+  _defineProperty(DynamicImport, "displayName", "DynamicImport".concat(isHOC ? ":HOC" : "", "(").concat(name || "?", ")"));
 
   return isHOC ? function () {
     for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {

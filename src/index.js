@@ -3,6 +3,8 @@ import React, { Component } from "react";
 const defaultErrorHandler = ({ name, error: { message } }) =>
   `Failed to fetch dynamic module: ${name}.\nError: ${message}.`;
 
+const defaultPlaceholder = () => null;
+
 /**
  * Dynamically load any react module(Component or an HOC)
  *
@@ -17,9 +19,9 @@ const defaultErrorHandler = ({ name, error: { message } }) =>
  * @param {Boolean} [options.isHOC=false] - Is the module a HOC?
  * @param {String} [options.name] - Dynamic module to be fetched(Mostly it will be part of the module file name),
  *                                        optional if loader returns same component every time
- * @param {Component} [options.placeholder=null] - React component to be rendered until actual module is fetched
- *                                                 (You can add UX improvements like adding small delay before showing
- *                                                 loader inside your class/functional component)
+ * @param {Component} [options.placeholder=defaultPlaceholder] - React component to be rendered until actual module is fetched
+ *                                                               (You can add UX improvements like adding small delay before showing
+ *                                                               loader inside your class/functional component)
  * @param {Component} [options.errorHandler=defaultErrorHandler] - React component to be rendered if fetching actual module fails.
  *                                                                 This will receive `name` and `error` object as `props`
  */
@@ -27,7 +29,7 @@ const DynamicImportWrapper = ({
   loader,
   isHOC = false,
   name,
-  placeholder = null,
+  placeholder: DefaultPlaceholder = defaultPlaceholder,
   errorHandler: ErrorHandler = defaultErrorHandler
 }) => {
   if (!loader || (loader && typeof loader !== "function")) {
@@ -35,7 +37,7 @@ const DynamicImportWrapper = ({
   }
 
   class DynamicImport extends Component {
-    static displayName = `DynamicImport${isHOC ? ":HOC" : ""}(${name})`;
+    static displayName = `DynamicImport${isHOC ? ":HOC" : ""}(${name || "?"})`;
 
     isMounted = false;
 
@@ -85,7 +87,11 @@ const DynamicImportWrapper = ({
         return <ErrorHandler error={fetchError} name={name} />;
       }
 
-      return DynamicComponent ? <DynamicComponent {...props} /> : placeholder;
+      return DynamicComponent ? (
+        <DynamicComponent {...props} />
+      ) : (
+        <DefaultPlaceholder name={name} />
+      );
     }
   }
 

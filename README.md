@@ -57,7 +57,6 @@ yarn add react-dynamic-import
          */
         import ReactDynamicImport from 'react-dynamic-import';
         // or const ReactDynamicImport = require('react-dynamic-import');
-        import RealComponent from './realComponent.js';
 
         /**
          * Define dynamic import loader function
@@ -69,7 +68,7 @@ yarn add react-dynamic-import
          */
         // Make sure to use it outside render method, else new component is rendered in each render
         // You can choose to show a placeholder and render error component in case of error, check API section for more
-        const RealComponent = ReactDynamicImport({ loader }),
+        const RealComponent = ReactDynamicImport({ loader });
 
         class Container extends React.component {
             render() {
@@ -94,6 +93,7 @@ yarn add react-dynamic-import
          */
         import ReactDynamicImport from 'react-dynamic-import';
         // or const ReactDynamicImport = require('react-dynamic-import');
+        import RealComponent from './realComponent.js';
 
         /**
          * Define dynamic import loader function
@@ -105,7 +105,7 @@ yarn add react-dynamic-import
          */
         // Make sure to use it outside render method, else new component is rendered in each render
         // You can choose to show a placeholder and render error component in case of error, check API section for more
-        const DynamicHOC = ReactDynamicImport({ loader, isHOC: true }),
+        const DynamicHOC = ReactDynamicImport({ loader, isHOC: true });
         const WrappedComponent = DynamicHOC(RealComponent);
 
         class Container extends React.component {
@@ -152,7 +152,7 @@ yarn add react-dynamic-import
                 // Make sure to use it outside render method, else new component is rendered in each render
                 // You can choose to show a placeholder and render error component in case of error, check API section for more
                 // This loads different module when different language configuration is passed
-                this.RealComponent = ReactDynamicImport({ name: `realComponent-${props.lang || 'en'}`, loader }),
+                this.RealComponent = ReactDynamicImport({ name: `realComponent-${props.lang || 'en'}`, loader });
             }
 
             render() {
@@ -200,7 +200,7 @@ yarn add react-dynamic-import
                 // Make sure to use it outside render method, else new component is rendered in each render
                 // You can choose to show a placeholder and render error component in case of error, check API section for more
                 // This loads different HOC module when different language configuration is passed
-                const DynamicHOC = ReactDynamicImport({ name: ` withHOC-${props.lang || 'en'}` ,loader, isHOC: true }),
+                const DynamicHOC = ReactDynamicImport({ name: ` withHOC-${props.lang || 'en'}` ,loader, isHOC: true });
                 this.WrappedComponent = DynamicHOC(RealComponent);
             }
 
