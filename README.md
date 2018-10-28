@@ -200,7 +200,7 @@ yarn add react-dynamic-import
                 // Make sure to use it outside render method, else new component is rendered in each render
                 // You can choose to show a placeholder and render error component in case of error, check API section for more
                 // This loads different HOC module when different language configuration is passed
-                const DynamicHOC = ReactDynamicImport({ name: ` withHOC-${props.lang || 'en'}` ,loader, isHOC: true });
+                const DynamicHOC = ReactDynamicImport({ name: `withHOC-${props.lang || 'en'}` ,loader, isHOC: true });
                 this.WrappedComponent = DynamicHOC(RealComponent);
             }
 
