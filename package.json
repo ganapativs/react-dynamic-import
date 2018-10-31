@@ -63,7 +63,7 @@
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-uglify": "^6.0.0",
-    "size-limit": "^0.20.1"
+    "size-limit": "^0.21.0"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0"
