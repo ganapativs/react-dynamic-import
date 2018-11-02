@@ -97,8 +97,11 @@ const DynamicImportWrapper = ({
 
   return isHOC
     ? (...args) =>
-        function DynamicImportHOCFetcher(props) {
-          return <DynamicImport {...props} hocArgs={args} />;
+        // Using class component here to support ref
+        class DynamicImportHOCFetcher extends Component {
+          render() {
+            return <DynamicImport {...this.props} hocArgs={args} />;
+          }
         }
     : DynamicImport;
 };

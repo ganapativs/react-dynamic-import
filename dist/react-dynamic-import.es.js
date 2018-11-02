@@ -311,11 +311,30 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       args[_key2] = arguments[_key2];
     }
 
-    return function DynamicImportHOCFetcher(props) {
-      return React.createElement(DynamicImport, _extends({}, props, {
-        hocArgs: args
-      }));
-    };
+    return (
+      /*#__PURE__*/
+      // Using class component here to support ref
+      function (_Component2) {
+        _inherits(DynamicImportHOCFetcher, _Component2);
+
+        function DynamicImportHOCFetcher() {
+          _classCallCheck(this, DynamicImportHOCFetcher);
+
+          return _possibleConstructorReturn(this, _getPrototypeOf(DynamicImportHOCFetcher).apply(this, arguments));
+        }
+
+        _createClass(DynamicImportHOCFetcher, [{
+          key: "render",
+          value: function render() {
+            return React.createElement(DynamicImport, _extends({}, this.props, {
+              hocArgs: args
+            }));
+          }
+        }]);
+
+        return DynamicImportHOCFetcher;
+      }(Component)
+    );
   } : DynamicImport;
 };
 

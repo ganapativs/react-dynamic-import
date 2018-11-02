@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-import",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Dynamically load and render any react module(Component or an HOC) using dynamic import 🎉",
   "main": "dist/react-dynamic-import.js",
   "module": "dist/react-dynamic-import.es.js",
@@ -26,12 +26,12 @@
     "build": "NODE_ENV=production rollup -c",
     "lint": "eslint ./src --ext .js",
     "jsdoc": "mkdir -p docs && jsdoc2md src/index.js > docs/react-dynamic-import.md",
-    "prepublishOnly": "yarn run jsdoc",
+    "prepublishOnly": "yarn jsdoc && yarn build",
     "size": "size-limit"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn build && yarn run jsdoc && git add dist docs"
+      "pre-commit": "yarn build && yarn jsdoc && git add dist docs"
     }
   },
   "size-limit": [
