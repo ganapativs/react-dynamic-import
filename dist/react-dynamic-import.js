@@ -291,7 +291,8 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
 
         var _this$props = this.props,
             hocArgs = _this$props.hocArgs,
-            props = _objectWithoutProperties(_this$props, ["hocArgs"]);
+            forwardedRef = _this$props.forwardedRef,
+            props = _objectWithoutProperties(_this$props, ["hocArgs", "forwardedRef"]);
 
         if (fetchError) {
           return React__default.createElement(ErrorHandler, {
@@ -300,7 +301,9 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
           });
         }
 
-        return DynamicComponent ? React__default.createElement(DynamicComponent, props) : React__default.createElement(DefaultPlaceholder, {
+        return DynamicComponent ? React__default.createElement(DynamicComponent, _extends({}, props, {
+          ref: forwardedRef
+        })) : React__default.createElement(DefaultPlaceholder, {
           name: name
         });
       }
@@ -316,31 +319,17 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       args[_key2] = arguments[_key2];
     }
 
-    return (
-      /*#__PURE__*/
-      // Using class component here to support ref
-      function (_Component2) {
-        _inherits(DynamicImportHOCFetcher, _Component2);
-
-        function DynamicImportHOCFetcher() {
-          _classCallCheck(this, DynamicImportHOCFetcher);
-
-          return _possibleConstructorReturn(this, _getPrototypeOf(DynamicImportHOCFetcher).apply(this, arguments));
-        }
-
-        _createClass(DynamicImportHOCFetcher, [{
-          key: "render",
-          value: function render() {
-            return React__default.createElement(DynamicImport, _extends({}, this.props, {
-              hocArgs: args
-            }));
-          }
-        }]);
-
-        return DynamicImportHOCFetcher;
-      }(React.Component)
-    );
-  } : DynamicImport;
+    return React.forwardRef(function DynamicImportHOCFetcher(props, ref) {
+      return React__default.createElement(DynamicImport, _extends({}, props, {
+        forwardedRef: ref,
+        hocArgs: args
+      }));
+    });
+  } : React.forwardRef(function DynamicImportFetcher(props, ref) {
+    return React__default.createElement(DynamicImport, _extends({}, props, {
+      forwardedRef: ref
+    }));
+  });
 };
 
 module.exports = DynamicImportWrapper;

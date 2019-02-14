@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+/* eslint-disable react/prop-types */
+import React, { Component, forwardRef } from "react";
 
 const defaultErrorHandler = ({ name, error: { message } }) =>
   `Failed to fetch dynamic module: ${name}.\nError: ${message}.`;
@@ -81,14 +82,14 @@ const DynamicImportWrapper = ({
 
     render() {
       const { DynamicComponent, fetchError } = this.state;
-      const { hocArgs, ...props } = this.props;
+      const { hocArgs, forwardedRef, ...props } = this.props;
 
       if (fetchError) {
         return <ErrorHandler error={fetchError} name={name} />;
       }
 
       return DynamicComponent ? (
-        <DynamicComponent {...props} />
+        <DynamicComponent {...props} ref={forwardedRef} />
       ) : (
         <DefaultPlaceholder name={name} />
       );
@@ -97,13 +98,12 @@ const DynamicImportWrapper = ({
 
   return isHOC
     ? (...args) =>
-        // Using class component here to support ref
-        class DynamicImportHOCFetcher extends Component {
-          render() {
-            return <DynamicImport {...this.props} hocArgs={args} />;
-          }
-        }
-    : DynamicImport;
+        forwardRef(function DynamicImportHOCFetcher(props, ref) {
+          return <DynamicImport {...props} forwardedRef={ref} hocArgs={args} />;
+        })
+    : forwardRef(function DynamicImportFetcher(props, ref) {
+        return <DynamicImport {...props} forwardedRef={ref} />;
+      });
 };
 
 export default DynamicImportWrapper;
