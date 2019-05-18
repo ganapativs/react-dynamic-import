@@ -4,6 +4,8 @@ Dynamically load and render any react module(Component or an HOC) using dynamic 
 
 Tiny(**around 1.4kb gzipped**) dynamic module loader and renderer.
 
+👉 [DEMO](https://codesandbox.io/s/93b1m)
+
 > Works with any bundler which supports dynamic import(eg: webpack, parcel etc) ✨
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
