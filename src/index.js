@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { Component, forwardRef } from "react";
+import React, { forwardRef, useRef, useState, useEffect } from "react";
 
 const defaultErrorHandler = ({ name, error: { message } }) =>
   `Failed to fetch dynamic module: ${name}.\nError: ${message}.`;
@@ -34,21 +34,19 @@ const DynamicImportWrapper = ({
   errorHandler: ErrorHandler = defaultErrorHandler
 }) => {
   if (!loader || (loader && typeof loader !== "function")) {
-    throw new Error("'loader' is required and should be of type 'function'.");
+    throw new Error(
+      "'loader' is required and should be of the type 'function'."
+    );
   }
 
-  class DynamicImport extends Component {
-    static displayName = `DynamicImport${isHOC ? ":HOC" : ""}(${name || "?"})`;
+  function DynamicImport(props) {
+    const isMounted = useRef(false);
+    const [DynamicComponent, setDynamicComponent] = useState(null);
+    const [fetchError, setFetchError] = useState(null);
+    const { hocArgs, forwardedRef, ...rest } = props;
 
-    isMounted = false;
-
-    state = {
-      DynamicComponent: null,
-      fetchError: null
-    };
-
-    componentDidMount() {
-      this.isMounted = true;
+    useEffect(() => {
+      isMounted.current = true;
       const loaderPromise = loader(name);
 
       if (
@@ -60,50 +58,57 @@ const DynamicImportWrapper = ({
         );
       }
 
+      // Async await increases the bundle size
       loader(name)
         .then(mod => {
-          const { hocArgs } = this.props;
-          const m = mod.default || mod;
+          if (isMounted.current) {
+            const { hocArgs: args } = props;
+            const m = mod.default || mod;
 
-          if (this.isMounted) {
-            this.setState({
-              DynamicComponent: isHOC ? m(...hocArgs) : m
-            });
+            // useState executes the function if functional component is passed
+            setDynamicComponent({ component: isHOC ? m(...args) : m });
           }
         })
-        .catch(fetchError => {
-          this.setState({ fetchError });
+        .catch(err => {
+          setFetchError(err);
         });
+
+      return () => {
+        isMounted.current = false;
+      };
+    }, []);
+
+    if (fetchError) {
+      return <ErrorHandler error={fetchError} name={name} />;
     }
 
-    componentWillUnmount() {
-      this.isMounted = false;
-    }
-
-    render() {
-      const { DynamicComponent, fetchError } = this.state;
-      const { hocArgs, forwardedRef, ...props } = this.props;
-
-      if (fetchError) {
-        return <ErrorHandler error={fetchError} name={name} />;
-      }
-
-      return DynamicComponent ? (
-        <DynamicComponent {...props} ref={forwardedRef} />
-      ) : (
-        <DefaultPlaceholder name={name} />
-      );
-    }
+    return DynamicComponent ? (
+      <DynamicComponent.component {...rest} ref={forwardedRef} />
+    ) : (
+      <DefaultPlaceholder name={name} />
+    );
   }
 
-  return isHOC
-    ? (...args) =>
-        forwardRef(function DynamicImportHOCFetcher(props, ref) {
-          return <DynamicImport {...props} forwardedRef={ref} hocArgs={args} />;
-        })
-    : forwardRef(function DynamicImportFetcher(props, ref) {
-        return <DynamicImport {...props} forwardedRef={ref} />;
-      });
+  DynamicImport.displayName = `DynamicImport${isHOC ? ":HOC" : ""}(${name ||
+    "?"})`;
+
+  function DynamicImportFetcher(props, ref) {
+    return <DynamicImport {...props} forwardedRef={ref} />;
+  }
+  DynamicImportFetcher.displayName = "DynamicImportFetcher";
+
+  const ComponentFetcher = forwardRef(DynamicImportFetcher);
+
+  const HOCFetcher = (...args) => {
+    function DynamicImportHOCFetcher(props, ref) {
+      return <DynamicImport {...props} forwardedRef={ref} hocArgs={args} />;
+    }
+    DynamicImportHOCFetcher.displayName = "DynamicImportHOCFetcher";
+
+    return forwardRef(DynamicImportHOCFetcher);
+  };
+
+  return isHOC ? HOCFetcher : ComponentFetcher;
 };
 
 export default DynamicImportWrapper;

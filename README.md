@@ -2,11 +2,13 @@
 
 Dynamically load and render any react module(Component or an HOC) using dynamic import 🎉
 
-Tiny(**around 1.4kb gzipped**) dynamic module loader and renderer.
+Tiny(**around 1.16kb gzipped**) dynamic module loader and renderer.
 
-👉 [DEMO](https://codesandbox.io/s/93b1m)
+👉 [DEMO](https://codesandbox.io/s/7pkk9)
 
-> Works with any bundler which supports dynamic import(eg: webpack, parcel etc) ✨
+> ⚠️ Hooks only(requires react 16.8.0 or above), use [v1.0.4](https://www.npmjs.com/package/react-dynamic-import/v/1.0.4) if you want older react versions support
+>
+> Should work with any bundler(eg: webpack, parcel etc) which supports dynamic import ✨
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ganapativs/react-dynamic-import/)
@@ -48,11 +50,14 @@ yarn add react-dynamic-import
 1) Component
 
     - **Folder structure**
+
         ```text
         |_ realComponent.js
         |_ container.js <-- working file
         ```
+
     - **Usage**
+
         ```js
         /**
          * Import library
@@ -83,12 +88,15 @@ yarn add react-dynamic-import
 1) HOC
 
     - **Folder structure**
+
         ```text
         |_ realComponent.js <-- Real component to wrap in HOC
         |_ withHOC.js <-- HOC
         |_ container.js <-- working file
         ```
+
     - **Usage**
+
         ```js
         /**
          * Import library
@@ -123,6 +131,7 @@ yarn add react-dynamic-import
 1) Component
 
     - **Folder structure**
+
         ```text
         |_ dynamic
         |  |_ realComponent-en.js
@@ -130,7 +139,9 @@ yarn add react-dynamic-import
         |  |_ realComponent-kn.js
         |_ container.js <-- working file
         ```
+
     - **Usage**
+
         ```js
         /**
          * Import library
@@ -169,6 +180,7 @@ yarn add react-dynamic-import
 1) HOC
 
     - **Folder structure**
+
         ```text
         |_ dynamic <-- Dynamic HOC's
         |  |_ withHOC-en.js
@@ -177,7 +189,9 @@ yarn add react-dynamic-import
         |_ realComponent.js <-- Real component to wrap in HOC
         |_ container.js <-- working file
         ```
+
     - **Usage**
+
         ```js
         /**
          * Import library
@@ -250,4 +264,4 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 
 ## License
 
-[MIT License](https://opensource.org/licenses/MIT) © [Ganapati V S](http://meetguns.com)
+[MIT License](https://opensource.org/licenses/MIT) © [Ganapati V S](https://meetguns.com)
