@@ -19,43 +19,6 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
 function _extends() {
   _extends = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -72,37 +35,6 @@ function _extends() {
   };
 
   return _extends.apply(this, arguments);
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf(subClass, superClass);
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-
-  return _setPrototypeOf(o, p);
 }
 
 function _objectWithoutPropertiesLoose(source, excluded) {
@@ -141,20 +73,8 @@ function _objectWithoutProperties(source, excluded) {
   return target;
 }
 
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (typeof call === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return _assertThisInitialized(self);
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
 }
 
 function _toConsumableArray(arr) {
@@ -169,12 +89,46 @@ function _arrayWithoutHoles(arr) {
   }
 }
 
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
 function _iterableToArray(iter) {
   if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
 }
 
+function _iterableToArrayLimit(arr, i) {
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
 
 var defaultErrorHandler = function defaultErrorHandler(_ref) {
@@ -219,117 +173,94 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       ErrorHandler = _ref2$errorHandler === void 0 ? defaultErrorHandler : _ref2$errorHandler;
 
   if (!loader || loader && typeof loader !== "function") {
-    throw new Error("'loader' is required and should be of type 'function'.");
+    throw new Error("'loader' is required and should be of the type 'function'.");
   }
 
-  var DynamicImport =
-  /*#__PURE__*/
-  function (_Component) {
-    _inherits(DynamicImport, _Component);
+  function DynamicImport(props) {
+    var isMounted = React.useRef(false);
 
-    function DynamicImport() {
-      var _getPrototypeOf2;
+    var _useState = React.useState(null),
+        _useState2 = _slicedToArray(_useState, 2),
+        DynamicComponent = _useState2[0],
+        setDynamicComponent = _useState2[1];
 
-      var _this;
+    var _useState3 = React.useState(null),
+        _useState4 = _slicedToArray(_useState3, 2),
+        fetchError = _useState4[0],
+        setFetchError = _useState4[1];
 
-      _classCallCheck(this, DynamicImport);
+    var hocArgs = props.hocArgs,
+        forwardedRef = props.forwardedRef,
+        rest = _objectWithoutProperties(props, ["hocArgs", "forwardedRef"]);
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    React.useEffect(function () {
+      isMounted.current = true;
+      var loaderPromise = loader(name);
 
-      _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DynamicImport)).call.apply(_getPrototypeOf2, [this].concat(args)));
+      if (!loaderPromise || loaderPromise && !(loaderPromise instanceof Promise)) {
+        throw new Error("Expected 'loader' to return a 'Promise', it returned '".concat(_typeof(loaderPromise), "' instead."));
+      } // Async await increases the bundle size
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "isMounted", false);
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-        DynamicComponent: null,
-        fetchError: null
+      loader(name).then(function (mod) {
+        if (isMounted.current) {
+          var args = props.hocArgs;
+          var m = mod["default"] || mod; // useState executes the function if functional component is passed
+
+          setDynamicComponent({
+            component: isHOC ? m.apply(void 0, _toConsumableArray(args)) : m
+          });
+        }
+      })["catch"](function (err) {
+        setFetchError(err);
       });
+      return function () {
+        isMounted.current = false;
+      };
+    }, []);
 
-      return _this;
+    if (fetchError) {
+      return React__default.createElement(ErrorHandler, {
+        error: fetchError,
+        name: name
+      });
     }
 
-    _createClass(DynamicImport, [{
-      key: "componentDidMount",
-      value: function componentDidMount() {
-        var _this2 = this;
+    return DynamicComponent ? React__default.createElement(DynamicComponent.component, _extends({}, rest, {
+      ref: forwardedRef
+    })) : React__default.createElement(DefaultPlaceholder, {
+      name: name
+    });
+  }
 
-        this.isMounted = true;
-        var loaderPromise = loader(name);
+  DynamicImport.displayName = "DynamicImport".concat(isHOC ? ":HOC" : "", "(").concat(name || "?", ")");
 
-        if (!loaderPromise || loaderPromise && !(loaderPromise instanceof Promise)) {
-          throw new Error("Expected 'loader' to return a 'Promise', it returned '".concat(_typeof(loaderPromise), "' instead."));
-        }
+  function DynamicImportFetcher(props, ref) {
+    return React__default.createElement(DynamicImport, _extends({}, props, {
+      forwardedRef: ref
+    }));
+  }
 
-        loader(name).then(function (mod) {
-          var hocArgs = _this2.props.hocArgs;
-          var m = mod.default || mod;
+  DynamicImportFetcher.displayName = "DynamicImportFetcher";
+  var ComponentFetcher = React.forwardRef(DynamicImportFetcher);
 
-          if (_this2.isMounted) {
-            _this2.setState({
-              DynamicComponent: isHOC ? m.apply(void 0, _toConsumableArray(hocArgs)) : m
-            });
-          }
-        }).catch(function (fetchError) {
-          _this2.setState({
-            fetchError: fetchError
-          });
-        });
-      }
-    }, {
-      key: "componentWillUnmount",
-      value: function componentWillUnmount() {
-        this.isMounted = false;
-      }
-    }, {
-      key: "render",
-      value: function render() {
-        var _this$state = this.state,
-            DynamicComponent = _this$state.DynamicComponent,
-            fetchError = _this$state.fetchError;
-
-        var _this$props = this.props,
-            hocArgs = _this$props.hocArgs,
-            forwardedRef = _this$props.forwardedRef,
-            props = _objectWithoutProperties(_this$props, ["hocArgs", "forwardedRef"]);
-
-        if (fetchError) {
-          return React__default.createElement(ErrorHandler, {
-            error: fetchError,
-            name: name
-          });
-        }
-
-        return DynamicComponent ? React__default.createElement(DynamicComponent, _extends({}, props, {
-          ref: forwardedRef
-        })) : React__default.createElement(DefaultPlaceholder, {
-          name: name
-        });
-      }
-    }]);
-
-    return DynamicImport;
-  }(React.Component);
-
-  _defineProperty(DynamicImport, "displayName", "DynamicImport".concat(isHOC ? ":HOC" : "", "(").concat(name || "?", ")"));
-
-  return isHOC ? function () {
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
+  var HOCFetcher = function HOCFetcher() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    return React.forwardRef(function DynamicImportHOCFetcher(props, ref) {
+    function DynamicImportHOCFetcher(props, ref) {
       return React__default.createElement(DynamicImport, _extends({}, props, {
         forwardedRef: ref,
         hocArgs: args
       }));
-    });
-  } : React.forwardRef(function DynamicImportFetcher(props, ref) {
-    return React__default.createElement(DynamicImport, _extends({}, props, {
-      forwardedRef: ref
-    }));
-  });
+    }
+
+    DynamicImportHOCFetcher.displayName = "DynamicImportHOCFetcher";
+    return React.forwardRef(DynamicImportHOCFetcher);
+  };
+
+  return isHOC ? HOCFetcher : ComponentFetcher;
 };
 
 module.exports = DynamicImportWrapper;
