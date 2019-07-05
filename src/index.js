@@ -34,9 +34,7 @@ const DynamicImportWrapper = ({
   errorHandler: ErrorHandler = defaultErrorHandler
 }) => {
   if (!loader || (loader && typeof loader !== "function")) {
-    throw new Error(
-      "'loader' is required and should be of the type 'function'."
-    );
+    throw new Error("'loader' is required and should be of type 'function'.");
   }
 
   function DynamicImport(props) {
@@ -90,7 +88,7 @@ const DynamicImportWrapper = ({
   }
 
   DynamicImport.displayName = `DynamicImport${isHOC ? ":HOC" : ""}(${name ||
-    "?"})`;
+    "Unknown"})`;
 
   function DynamicImportFetcher(props, ref) {
     return <DynamicImport {...props} forwardedRef={ref} />;

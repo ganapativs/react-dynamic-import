@@ -168,7 +168,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       ErrorHandler = _ref2$errorHandler === void 0 ? defaultErrorHandler : _ref2$errorHandler;
 
   if (!loader || loader && typeof loader !== "function") {
-    throw new Error("'loader' is required and should be of the type 'function'.");
+    throw new Error("'loader' is required and should be of type 'function'.");
   }
 
   function DynamicImport(props) {
@@ -228,7 +228,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
     });
   }
 
-  DynamicImport.displayName = "DynamicImport".concat(isHOC ? ":HOC" : "", "(").concat(name || "?", ")");
+  DynamicImport.displayName = "DynamicImport".concat(isHOC ? ":HOC" : "", "(").concat(name || "Unknown", ")");
 
   function DynamicImportFetcher(props, ref) {
     return React.createElement(DynamicImport, _extends({}, props, {
