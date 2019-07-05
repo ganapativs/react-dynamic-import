@@ -6,10 +6,10 @@ os:
 node_js:
   - "node"
   - "10"
-  - "9"
+  # - "9"
   - "8"
   # - "7" - Unsupported(https://github.com/nodejs/Release#end-of-life-releases)
-  - "6"
+  # - "6"
 cache:
   yarn: true
   directories:
