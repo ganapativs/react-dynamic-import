@@ -1,11 +1,5 @@
 {
     "presets": [
-        [
-            "@babel/preset-env",
-            {
-                "modules": false
-            }
-        ],
-        "@babel/preset-react"
+        "@ganapativs/babel-preset-react"
     ]
 }

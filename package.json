@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-import",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Dynamically load and render any react module(Component or an HOC) using dynamic import 🎉",
   "main": "dist/react-dynamic-import.js",
   "module": "dist/react-dynamic-import.es.js",
@@ -41,33 +41,22 @@
     }
   ],
   "devDependencies": {
-    "@babel/core": "^7.5.0",
-    "@babel/preset-env": "^7.5.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.4.4",
-    "babel-eslint": "^10.0.2",
-    "eslint": "^6.0.1",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.14.2",
-    "husky": "^3.0.0",
-    "jsdoc-to-markdown": "^5.0.0",
-    "prettier": "^1.18.2",
-    "rollup": "^1.16.6",
+    "@ganapativs/babel-preset-react": "^0.0.3",
+    "@ganapativs/eslint-config-react": "^0.0.7",
+    "@size-limit/preset-small-lib": "^2.1.5",
+    "husky": "^3.0.5",
+    "jsdoc-to-markdown": "^5.0.1",
+    "rollup": "^1.21.2",
     "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-uglify": "^6.0.2",
-    "size-limit": "^2.0.0"
+    "rollup-plugin-uglify": "^6.0.3"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0"
   },
   "dependencies": {
-    "react": "^16.8.6"
+    "react": "^16.9.0"
   }
 }

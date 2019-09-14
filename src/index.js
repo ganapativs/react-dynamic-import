@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { forwardRef, useRef, useState, useEffect } from "react";
+import React, { forwardRef, useRef, useState, useEffect } from 'react';
 
 const defaultErrorHandler = ({ name, error: { message } }) =>
-  `Failed to fetch dynamic module: ${name}.\nError: ${message}.`;
+  `Unable to fetch module: ${name}.\nError: ${message}.`;
 
 const defaultPlaceholder = () => null;
 
@@ -31,9 +31,9 @@ const DynamicImportWrapper = ({
   isHOC = false,
   name,
   placeholder: DefaultPlaceholder = defaultPlaceholder,
-  errorHandler: ErrorHandler = defaultErrorHandler
+  errorHandler: ErrorHandler = defaultErrorHandler,
 }) => {
-  if (!loader || (loader && typeof loader !== "function")) {
+  if (!loader || (loader && typeof loader !== 'function')) {
     throw new Error("'loader' is required and should be of type 'function'.");
   }
 
@@ -52,7 +52,7 @@ const DynamicImportWrapper = ({
         (loaderPromise && !(loaderPromise instanceof Promise))
       ) {
         throw new Error(
-          `Expected 'loader' to return a 'Promise', it returned '${typeof loaderPromise}' instead.`
+          `Expected 'loader' to return a 'Promise', but, it returned '${typeof loaderPromise}' instead.`,
         );
       }
 
@@ -74,7 +74,7 @@ const DynamicImportWrapper = ({
       return () => {
         isMounted.current = false;
       };
-    }, []);
+    }, [props]);
 
     if (fetchError) {
       return <ErrorHandler error={fetchError} name={name} />;
@@ -87,13 +87,13 @@ const DynamicImportWrapper = ({
     );
   }
 
-  DynamicImport.displayName = `DynamicImport${isHOC ? ":HOC" : ""}(${name ||
-    "Unknown"})`;
+  DynamicImport.displayName = `DynamicImport${isHOC ? ':HOC' : ''}(${name ||
+    'Unknown'})`;
 
   function DynamicImportFetcher(props, ref) {
     return <DynamicImport {...props} forwardedRef={ref} />;
   }
-  DynamicImportFetcher.displayName = "DynamicImportFetcher";
+  DynamicImportFetcher.displayName = 'DynamicImportFetcher';
 
   const ComponentFetcher = forwardRef(DynamicImportFetcher);
 
@@ -101,7 +101,7 @@ const DynamicImportWrapper = ({
     function DynamicImportHOCFetcher(props, ref) {
       return <DynamicImport {...props} forwardedRef={ref} hocArgs={args} />;
     }
-    DynamicImportHOCFetcher.displayName = "DynamicImportHOCFetcher";
+    DynamicImportHOCFetcher.displayName = 'DynamicImportHOCFetcher';
 
     return forwardRef(DynamicImportHOCFetcher);
   };
