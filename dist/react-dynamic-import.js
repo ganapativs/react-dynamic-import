@@ -98,6 +98,10 @@ function _iterableToArray(iter) {
 }
 
 function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -134,7 +138,7 @@ function _nonIterableRest() {
 var defaultErrorHandler = function defaultErrorHandler(_ref) {
   var name = _ref.name,
       message = _ref.error.message;
-  return "Failed to fetch dynamic module: ".concat(name, ".\nError: ").concat(message, ".");
+  return "Unable to fetch module: ".concat(name, ".\nError: ").concat(message, ".");
 };
 
 var defaultPlaceholder = function defaultPlaceholder() {
@@ -172,7 +176,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       _ref2$errorHandler = _ref2.errorHandler,
       ErrorHandler = _ref2$errorHandler === void 0 ? defaultErrorHandler : _ref2$errorHandler;
 
-  if (!loader || loader && typeof loader !== "function") {
+  if (!loader || loader && typeof loader !== 'function') {
     throw new Error("'loader' is required and should be of type 'function'.");
   }
 
@@ -198,7 +202,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       var loaderPromise = loader(name);
 
       if (!loaderPromise || loaderPromise && !(loaderPromise instanceof Promise)) {
-        throw new Error("Expected 'loader' to return a 'Promise', it returned '".concat(_typeof(loaderPromise), "' instead."));
+        throw new Error("Expected 'loader' to return a 'Promise', but, it returned '".concat(_typeof(loaderPromise), "' instead."));
       } // Async await increases the bundle size
 
 
@@ -217,7 +221,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       return function () {
         isMounted.current = false;
       };
-    }, []);
+    }, [props]);
 
     if (fetchError) {
       return React__default.createElement(ErrorHandler, {
@@ -233,7 +237,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
     });
   }
 
-  DynamicImport.displayName = "DynamicImport".concat(isHOC ? ":HOC" : "", "(").concat(name || "Unknown", ")");
+  DynamicImport.displayName = "DynamicImport".concat(isHOC ? ':HOC' : '', "(").concat(name || 'Unknown', ")");
 
   function DynamicImportFetcher(props, ref) {
     return React__default.createElement(DynamicImport, _extends({}, props, {
@@ -241,7 +245,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
     }));
   }
 
-  DynamicImportFetcher.displayName = "DynamicImportFetcher";
+  DynamicImportFetcher.displayName = 'DynamicImportFetcher';
   var ComponentFetcher = React.forwardRef(DynamicImportFetcher);
 
   var HOCFetcher = function HOCFetcher() {
@@ -256,7 +260,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       }));
     }
 
-    DynamicImportHOCFetcher.displayName = "DynamicImportHOCFetcher";
+    DynamicImportHOCFetcher.displayName = 'DynamicImportHOCFetcher';
     return React.forwardRef(DynamicImportHOCFetcher);
   };
 
