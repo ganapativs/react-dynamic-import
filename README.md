@@ -4,7 +4,7 @@ Dynamically load and render any react module(Component or an HOC) using dynamic 
 
 Tiny(**around 1.18kb gzip**) dynamic module loader and renderer.
 
-👉 [DEMO](https://codesandbox.io/s/7pkk9)
+👉 [DEMO](https://codesandbox.io/s/react-dynamic-import-hooks-demo-108-kuf3u)
 
 > ⚠️ Hooks only(requires react 16.8.0 or above), use [v1.0.4](https://www.npmjs.com/package/react-dynamic-import/v/1.0.4) if you want older react versions support
 >
