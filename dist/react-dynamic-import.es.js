@@ -149,8 +149,8 @@ var defaultPlaceholder = function defaultPlaceholder() {
  *      const RealComponent = DynamicImport({ name: 'realModuleName', loader }),
  *
  * @param {Object} options - Options passed to react dynamic import functions
- * @param {Function} options.loader - function which takes module name and returns promise
- * @param {Boolean} [options.isHOC=false] - Is the module a HOC?
+ * @param {Function} options.loader - function which takes module name and returns promise to resolve module
+ * @param {Boolean} [options.isHOC=false] - Is the module an HOC?
  * @param {String} [options.name] - Dynamic module to be fetched(Mostly it will be part of the module file name),
  *                                        optional if loader returns same component every time
  * @param {Component} [options.placeholder=defaultPlaceholder] - React component to be rendered until actual module is fetched
@@ -167,7 +167,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       isHOC = _ref2$isHOC === void 0 ? false : _ref2$isHOC,
       name = _ref2.name,
       _ref2$placeholder = _ref2.placeholder,
-      DefaultPlaceholder = _ref2$placeholder === void 0 ? defaultPlaceholder : _ref2$placeholder,
+      Placeholder = _ref2$placeholder === void 0 ? defaultPlaceholder : _ref2$placeholder,
       _ref2$errorHandler = _ref2.errorHandler,
       ErrorHandler = _ref2$errorHandler === void 0 ? defaultErrorHandler : _ref2$errorHandler;
 
@@ -180,8 +180,8 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
 
     var _useState = useState(null),
         _useState2 = _slicedToArray(_useState, 2),
-        DynamicComponent = _useState2[0],
-        setDynamicComponent = _useState2[1];
+        DynamicModule = _useState2[0],
+        setDynamicModule = _useState2[1];
 
     var _useState3 = useState(null),
         _useState4 = _slicedToArray(_useState3, 2),
@@ -201,17 +201,19 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       } // Async await increases the bundle size
 
 
-      loader(name).then(function (mod) {
+      loaderPromise.then(function (mod) {
         if (isMounted.current) {
           var args = props.hocArgs;
           var m = mod["default"] || mod; // useState executes the function if functional component is passed
 
-          setDynamicComponent({
+          setDynamicModule({
             component: isHOC ? m.apply(void 0, _toConsumableArray(args)) : m
           });
         }
       })["catch"](function (err) {
-        setFetchError(err);
+        if (isMounted.current) {
+          setFetchError(err);
+        }
       });
       return function () {
         isMounted.current = false;
@@ -225,9 +227,9 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       });
     }
 
-    return DynamicComponent ? React.createElement(DynamicComponent.component, _extends({}, rest, {
+    return DynamicModule ? React.createElement(DynamicModule.component, _extends({}, rest, {
       ref: forwardedRef
-    })) : React.createElement(DefaultPlaceholder, {
+    })) : React.createElement(Placeholder, {
       name: name
     });
   }
