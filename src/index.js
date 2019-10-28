@@ -16,8 +16,8 @@ const defaultPlaceholder = () => null;
  *      const RealComponent = DynamicImport({ name: 'realModuleName', loader }),
  *
  * @param {Object} options - Options passed to react dynamic import functions
- * @param {Function} options.loader - function which takes module name and returns promise
- * @param {Boolean} [options.isHOC=false] - Is the module a HOC?
+ * @param {Function} options.loader - function which takes module name and returns promise to resolve module
+ * @param {Boolean} [options.isHOC=false] - Is the module an HOC?
  * @param {String} [options.name] - Dynamic module to be fetched(Mostly it will be part of the module file name),
  *                                        optional if loader returns same component every time
  * @param {Component} [options.placeholder=defaultPlaceholder] - React component to be rendered until actual module is fetched
@@ -30,7 +30,7 @@ const DynamicImportWrapper = ({
   loader,
   isHOC = false,
   name,
-  placeholder: DefaultPlaceholder = defaultPlaceholder,
+  placeholder: Placeholder = defaultPlaceholder,
   errorHandler: ErrorHandler = defaultErrorHandler,
 }) => {
   if (!loader || (loader && typeof loader !== 'function')) {
@@ -39,7 +39,7 @@ const DynamicImportWrapper = ({
 
   function DynamicImport(props) {
     const isMounted = useRef(false);
-    const [DynamicComponent, setDynamicComponent] = useState(null);
+    const [DynamicModule, setDynamicModule] = useState(null);
     const [fetchError, setFetchError] = useState(null);
     const { hocArgs, forwardedRef, ...rest } = props;
 
@@ -57,18 +57,20 @@ const DynamicImportWrapper = ({
       }
 
       // Async await increases the bundle size
-      loader(name)
+      loaderPromise
         .then(mod => {
           if (isMounted.current) {
             const { hocArgs: args } = props;
             const m = mod.default || mod;
 
             // useState executes the function if functional component is passed
-            setDynamicComponent({ component: isHOC ? m(...args) : m });
+            setDynamicModule({ component: isHOC ? m(...args) : m });
           }
         })
         .catch(err => {
-          setFetchError(err);
+          if (isMounted.current) {
+            setFetchError(err);
+          }
         });
 
       return () => {
@@ -80,10 +82,10 @@ const DynamicImportWrapper = ({
       return <ErrorHandler error={fetchError} name={name} />;
     }
 
-    return DynamicComponent ? (
-      <DynamicComponent.component {...rest} ref={forwardedRef} />
+    return DynamicModule ? (
+      <DynamicModule.component {...rest} ref={forwardedRef} />
     ) : (
-      <DefaultPlaceholder name={name} />
+      <Placeholder name={name} />
     );
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-import",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Dynamically load and render any react module(Component or an HOC) using dynamic import 🎉",
   "main": "dist/react-dynamic-import.js",
   "module": "dist/react-dynamic-import.es.js",
@@ -44,9 +44,9 @@
     "@ganapativs/babel-preset-react": "^0.0.3",
     "@ganapativs/eslint-config-react": "^0.0.7",
     "@size-limit/preset-small-lib": "^2.1.6",
-    "husky": "^3.0.8",
-    "jsdoc-to-markdown": "^5.0.1",
-    "rollup": "^1.23.1",
+    "husky": "^3.0.9",
+    "jsdoc-to-markdown": "^5.0.2",
+    "rollup": "^1.26.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
@@ -57,6 +57,6 @@
     "react": "^15.0.0 || ^16.0.0"
   },
   "dependencies": {
-    "react": "^16.10.2"
+    "react": "^16.11.0"
   }
 }
