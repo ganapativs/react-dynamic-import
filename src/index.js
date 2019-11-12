@@ -60,11 +60,10 @@ const DynamicImportWrapper = ({
       loaderPromise
         .then(mod => {
           if (isMounted.current) {
-            const { hocArgs: args } = props;
             const m = mod.default || mod;
 
             // useState executes the function if functional component is passed
-            setDynamicModule({ component: isHOC ? m(...args) : m });
+            setDynamicModule({ component: isHOC ? m(...hocArgs) : m });
           }
         })
         .catch(err => {
@@ -76,7 +75,7 @@ const DynamicImportWrapper = ({
       return () => {
         isMounted.current = false;
       };
-    }, [props]);
+    }, [hocArgs]);
 
     if (fetchError) {
       return <ErrorHandler error={fetchError} name={name} />;
