@@ -203,11 +203,10 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
 
       loaderPromise.then(function (mod) {
         if (isMounted.current) {
-          var args = props.hocArgs;
           var m = mod["default"] || mod; // useState executes the function if functional component is passed
 
           setDynamicModule({
-            component: isHOC ? m.apply(void 0, _toConsumableArray(args)) : m
+            component: isHOC ? m.apply(void 0, _toConsumableArray(hocArgs)) : m
           });
         }
       })["catch"](function (err) {
@@ -218,7 +217,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
       return function () {
         isMounted.current = false;
       };
-    }, [props]);
+    }, [hocArgs]);
 
     if (fetchError) {
       return React.createElement(ErrorHandler, {
