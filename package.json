@@ -1,10 +1,11 @@
 {
   "name": "react-dynamic-import",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Dynamically load and render any react module(Component or an HOC) using dynamic import 🎉",
   "main": "dist/react-dynamic-import.js",
   "module": "dist/react-dynamic-import.es.js",
   "browser": "dist/react-dynamic-import.umd.js",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/ganapativs/react-dynamic-import.git"
@@ -43,15 +44,15 @@
   "devDependencies": {
     "@ganapativs/babel-preset-react": "^0.0.3",
     "@ganapativs/eslint-config-react": "^0.0.7",
-    "@size-limit/preset-small-lib": "^2.2.1",
+    "@size-limit/preset-small-lib": "^2.2.2",
     "husky": "^3.1.0",
     "jsdoc-to-markdown": "^5.0.3",
-    "rollup": "^1.27.8",
+    "rollup": "^1.27.11",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-uglify": "^6.0.3"
+    "rollup-plugin-uglify": "^6.0.4"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0"
