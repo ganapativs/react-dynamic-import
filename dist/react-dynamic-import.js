@@ -1,9 +1,6 @@
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var React = require('react');
-var React__default = _interopDefault(React);
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -183,15 +180,15 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
   function DynamicImport(props) {
     var isMounted = React.useRef(false);
 
-    var _useState = React.useState(null),
-        _useState2 = _slicedToArray(_useState, 2),
-        DynamicModule = _useState2[0],
-        setDynamicModule = _useState2[1];
+    var _React$useState = React.useState(null),
+        _React$useState2 = _slicedToArray(_React$useState, 2),
+        DynamicModule = _React$useState2[0],
+        setDynamicModule = _React$useState2[1];
 
-    var _useState3 = React.useState(null),
-        _useState4 = _slicedToArray(_useState3, 2),
-        fetchError = _useState4[0],
-        setFetchError = _useState4[1];
+    var _React$useState3 = React.useState(null),
+        _React$useState4 = _slicedToArray(_React$useState3, 2),
+        fetchError = _React$useState4[0],
+        setFetchError = _React$useState4[1];
 
     var hocArgs = props.hocArgs,
         forwardedRef = props.forwardedRef,
@@ -225,15 +222,15 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
     }, [hocArgs]);
 
     if (fetchError) {
-      return React__default.createElement(ErrorHandler, {
+      return React.createElement(ErrorHandler, {
         error: fetchError,
         name: name
       });
     }
 
-    return DynamicModule ? React__default.createElement(DynamicModule.component, _extends({}, rest, {
+    return DynamicModule ? React.createElement(DynamicModule.component, _extends({}, rest, {
       ref: forwardedRef
-    })) : React__default.createElement(Placeholder, {
+    })) : React.createElement(Placeholder, {
       name: name
     });
   }
@@ -241,7 +238,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
   DynamicImport.displayName = "DynamicImport".concat(isHOC ? ':HOC' : '', "(").concat(name || 'Unknown', ")");
 
   function DynamicImportFetcher(props, ref) {
-    return React__default.createElement(DynamicImport, _extends({}, props, {
+    return React.createElement(DynamicImport, _extends({}, props, {
       forwardedRef: ref
     }));
   }
@@ -255,7 +252,7 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
     }
 
     function DynamicImportHOCFetcher(props, ref) {
-      return React__default.createElement(DynamicImport, _extends({}, props, {
+      return React.createElement(DynamicImport, _extends({}, props, {
         forwardedRef: ref,
         hocArgs: args
       }));

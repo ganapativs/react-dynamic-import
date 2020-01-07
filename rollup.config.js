@@ -1,12 +1,12 @@
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
-import external from 'rollup-plugin-peer-deps-external';
-import { uglify } from 'rollup-plugin-uglify';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 const getPlugins = () => [
-  external(),
+  peerDepsExternal(),
   resolve(),
   babel({
     comments: true,
@@ -27,7 +27,7 @@ export default [
       format: 'umd',
       sourcemap: true,
     },
-    plugins: getPlugins().concat([uglify()]),
+    plugins: getPlugins().concat([terser()]),
   },
   {
     input: 'src/index.js',

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { forwardRef, useRef, useState, useEffect } from 'react';
+import * as React from 'react';
 
 const defaultErrorHandler = ({ name, error: { message } }) =>
   `Unable to fetch module: ${name}.\nError: ${message}.`;
@@ -38,12 +38,12 @@ const DynamicImportWrapper = ({
   }
 
   function DynamicImport(props) {
-    const isMounted = useRef(false);
-    const [DynamicModule, setDynamicModule] = useState(null);
-    const [fetchError, setFetchError] = useState(null);
+    const isMounted = React.useRef(false);
+    const [DynamicModule, setDynamicModule] = React.useState(null);
+    const [fetchError, setFetchError] = React.useState(null);
     const { hocArgs, forwardedRef, ...rest } = props;
 
-    useEffect(() => {
+    React.useEffect(() => {
       isMounted.current = true;
       const loaderPromise = loader(name);
 
@@ -96,7 +96,7 @@ const DynamicImportWrapper = ({
   }
   DynamicImportFetcher.displayName = 'DynamicImportFetcher';
 
-  const ComponentFetcher = forwardRef(DynamicImportFetcher);
+  const ComponentFetcher = React.forwardRef(DynamicImportFetcher);
 
   const HOCFetcher = (...args) => {
     function DynamicImportHOCFetcher(props, ref) {
@@ -104,7 +104,7 @@ const DynamicImportWrapper = ({
     }
     DynamicImportHOCFetcher.displayName = 'DynamicImportHOCFetcher';
 
-    return forwardRef(DynamicImportHOCFetcher);
+    return React.forwardRef(DynamicImportHOCFetcher);
   };
 
   return isHOC ? HOCFetcher : ComponentFetcher;

@@ -2,7 +2,7 @@
 
 Dynamically load and render any react module(Component or an HOC) using dynamic import 🎉
 
-Tiny(**around 1.18kb gzip**) dynamic module loader and renderer.
+Tiny(**around 1.16kb gzip**) dynamic module loader and renderer.
 
 👉 [DEMO](https://codesandbox.io/s/react-dynamic-import-hooks-demo-108-kuf3u)
 
