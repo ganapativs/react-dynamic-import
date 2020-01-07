@@ -22,7 +22,7 @@ export default [
       globals: {
         react: 'React',
       },
-      name: 'DynamicModuleLoader',
+      name: 'ReactDynamicImport',
       file: pkg.browser,
       format: 'umd',
       sourcemap: true,
