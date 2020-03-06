@@ -47,7 +47,7 @@
     "@size-limit/preset-small-lib": "^4.0.1",
     "husky": "^4.2.2",
     "jsdoc-to-markdown": "^5.0.3",
-    "rollup": "^1.31.0",
+    "rollup": "^2.0.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
