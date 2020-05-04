@@ -44,7 +44,7 @@
   "devDependencies": {
     "@ganapativs/babel-preset-react": "^0.0.4",
     "@ganapativs/eslint-config-react": "^0.0.9",
-    "@size-limit/preset-small-lib": "^4.3.1",
+    "@size-limit/preset-small-lib": "^4.5.0",
     "husky": "^4.2.3",
     "jsdoc-to-markdown": "^5.0.3",
     "rollup": "^2.0.2",
