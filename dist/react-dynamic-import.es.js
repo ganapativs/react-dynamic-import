@@ -1,6 +1,8 @@
 import { forwardRef, createElement, useRef, useState, useEffect } from 'react';
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;
@@ -69,19 +71,15 @@ function _objectWithoutProperties(source, excluded) {
 }
 
 function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
 function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
 
 function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
 
 function _arrayWithHoles(arr) {
@@ -89,14 +87,11 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
 }
 
 function _iterableToArrayLimit(arr, i) {
-  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-    return;
-  }
-
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -122,12 +117,29 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
 function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 var defaultErrorHandler = function defaultErrorHandler(_ref) {
@@ -220,15 +232,15 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
     }, [hocArgs]);
 
     if (fetchError) {
-      return createElement(ErrorHandler, {
+      return /*#__PURE__*/createElement(ErrorHandler, {
         error: fetchError,
         name: name
       });
     }
 
-    return DynamicModule ? createElement(DynamicModule.component, _extends({}, rest, {
+    return DynamicModule ? /*#__PURE__*/createElement(DynamicModule.component, _extends({}, rest, {
       ref: forwardedRef
-    })) : createElement(Placeholder, {
+    })) : /*#__PURE__*/createElement(Placeholder, {
       name: name
     });
   }
@@ -236,13 +248,13 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
   DynamicImport.displayName = "DynamicImport".concat(isHOC ? ':HOC' : '', "(").concat(name || 'Unknown', ")");
 
   function DynamicImportFetcher(props, ref) {
-    return createElement(DynamicImport, _extends({}, props, {
+    return /*#__PURE__*/createElement(DynamicImport, _extends({}, props, {
       forwardedRef: ref
     }));
   }
 
   DynamicImportFetcher.displayName = 'DynamicImportFetcher';
-  var ComponentFetcher = forwardRef(DynamicImportFetcher);
+  var ComponentFetcher = /*#__PURE__*/forwardRef(DynamicImportFetcher);
 
   var HOCFetcher = function HOCFetcher() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -250,14 +262,14 @@ var DynamicImportWrapper = function DynamicImportWrapper(_ref2) {
     }
 
     function DynamicImportHOCFetcher(props, ref) {
-      return createElement(DynamicImport, _extends({}, props, {
+      return /*#__PURE__*/createElement(DynamicImport, _extends({}, props, {
         forwardedRef: ref,
         hocArgs: args
       }));
     }
 
     DynamicImportHOCFetcher.displayName = 'DynamicImportHOCFetcher';
-    return forwardRef(DynamicImportHOCFetcher);
+    return /*#__PURE__*/forwardRef(DynamicImportHOCFetcher);
   };
 
   return isHOC ? HOCFetcher : ComponentFetcher;

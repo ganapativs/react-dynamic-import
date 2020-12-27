@@ -1,5 +1,7 @@
 # react-dynamic-import
 
+⚠️ You might not need this library. Checkout [`React.lazy`](https://reactjs.org/docs/code-splitting.html#reactlazy) and see if it fits your use case.
+
 Dynamically load and render any react module(Component or an HOC) using dynamic import 🎉
 
 Tiny(**around 1.16kb gzip**) dynamic module loader and renderer.
